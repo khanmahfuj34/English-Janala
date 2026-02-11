@@ -5,3 +5,27 @@
 .font-bangla {
     font-family: "Hind Siliguri", sans-serif;
 }
+
+
+/* Responsive improvements */
+
+@media (max-width: 640px) {
+    body {
+        font-size: 14px;
+    }
+    .navbar {
+        padding: 0.5rem 1rem;
+    }
+}
+
+@media (min-width: 768px) {
+    body {
+        font-size: 16px;
+    }
+}
+
+@media (min-width: 1024px) {
+    body {
+        font-size: 16px;
+    }
+}
