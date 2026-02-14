@@ -5,6 +5,7 @@ const loadLesson = () => {
 };
 const removeActive = () => {
         const lessonbtn = document.querySelectorAll(".lesson-btn");
+        console.log(lessonbtn);
         lessonbtn.forEach(btn => btn.classList.remove("active"));
     }
     // const loadWordDetail = async(id) => {
@@ -23,21 +24,52 @@ const removeActive = () => {
 
 
 // };
-const loadLevelWord = (level_no) => {
-    // console.log(level_no);
-
-    // fetch("https://openapi.programming-hero.com/api/level/" + level_no)
-    const url = `
-    https: //openapi.programming-hero.com/api/level/${level_no}`
+const loadLevelWord = (id) => {
+    const url = `https://openapi.programming-hero.com/api/level/${id}`;
     fetch(url)
-        .then(res => res.json())
-        .then(data => {
+        .then((res) => res.json())
+        .then((data) => {
             removeActive();
-            const clickBtn = document.getElementById(`lesson-btn-${level_no}`);
+            const clickBtn = document.getElementById(`lesson-btn-${id}`);
+            // console.log(clickBtn);
             clickBtn.classList.add("active");
             displayLevelWord(data.data);
         });
-}
+};
+const loadWordDetail = async(id) => {
+    const url = `https://openapi.programming-hero.com/api/word/${id}`;
+    const res = await fetch(url);
+    const datails = await res.json();
+    // console.log(datails);
+    displayWordDetail(datails.data);
+
+};
+const displayWordDetail = (word) => {
+    const detailsContainer = document.getElementById("details-container");
+    detailsContainer.innerHTML = `
+     <div>
+                        <h2 class="text-xl font-semibold">${word.word} (<i class="fa-solid fa-microphone-lines"></i>:${word.pronunciation})</h2>
+                    </div>
+                    <div class="font-semibold">
+                        <h2 class="text-xl font-semibold">Meaning</h2>
+                        <p>${word.meaning}</p>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-semibold">Example</h2>
+                        <p>${word.sentence}</p>
+                    </div>
+                    <div class="space-x-2">
+                        <h2 class="text-xl font-semibold font-bangla ">সমার্থক শব্দ গুলো</h2>
+                        <span class="btn bg-sky-100 rounded-md">${word.synonyms/1}</span>
+                        <span class="btn bg-sky-100 rounded-md">sys2</span>
+                        <span class="btn bg-sky-100 rounded-md">sys3</span>
+                    </div>
+    `;
+    document.getElementById("word_modal").showModal();
+
+
+
+};
 
 
 // {
@@ -49,7 +81,7 @@ const loadLevelWord = (level_no) => {
 // }
 const displayLevelWord = (words) => {
     const wordContainer = document.getElementById("word-container");
-    console.log(words);
+    // console.log(words);
     wordContainer.innerHTML = "";
     if (words.length === 0) {
         wordContainer.innerHTML = `
